@@ -33,7 +33,7 @@ public class MichaelStuff {
 		int[] numlink = numLinks(doc, host);
 		
 		//Output total stats for page
-		System.out.println("Total number of links:" + numlink[0] +"\nNumber of internal links: "+numlink[1]);
+		System.out.println("Total number of links: " + numlink[0] +"\nNumber of internal links: "+numlink[1]);
 		System.out.println("Number of external links: "+ numlink[2]);
 		System.out.println("Number of images: "+numImages(doc));
 		System.out.println("Page size is "+ pageSize(pagename));
