@@ -22,6 +22,8 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.SwingUtilities;
 
+import edu.virginia.cs4240.webmetrics.Main;
+
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -46,22 +48,16 @@ public class NewJFrame extends javax.swing.JFrame {
 	private JLabel jLabel1;
 	private JFormattedTextField jFormattedTextField1;
 	private JButton Cancel;
+	private Main controller;
 
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				NewJFrame inst = new NewJFrame();
-				inst.setLocationRelativeTo(null);
-				inst.setVisible(true);
-			}
-		});
-	}
 	
-	public NewJFrame() {
+	public NewJFrame(Main controller) {		
 		super();
+		
+		this.controller = controller;
 		initGUI();
 	}
 	
@@ -85,6 +81,7 @@ public class NewJFrame extends javax.swing.JFrame {
 					Fetch.addMouseListener(new MouseAdapter() {
 						public void mouseClicked(MouseEvent evt) {
 							String x= (String) jFormattedTextField1.getValue();
+							controller.fetchPage(x);
 						}
 					});
 				}
