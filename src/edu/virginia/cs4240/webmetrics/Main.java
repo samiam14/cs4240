@@ -7,14 +7,14 @@ import javax.swing.JFrame;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import edu.virginia.cs4240.webmetrics.gui.NewJFrame;
+import edu.virginia.cs4240.webmetrics.gui.GUIFrame;
 
 public class Main {
 
 	public static void main(String[] args) {
 		final Main controller = new Main();
 		
-		final JFrame gui = new NewJFrame(controller);
+		final JFrame gui = new GUIFrame(controller);
 		gui.setLocationRelativeTo(null);
 		gui.setVisible(true);
 	}

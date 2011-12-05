@@ -36,7 +36,7 @@ import edu.virginia.cs4240.webmetrics.Main;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class NewJFrame extends javax.swing.JFrame {
+public class GUIFrame extends javax.swing.JFrame {
 	private JPanel jPanel1;
 	private JButton Fetch;
 	private JComboBox StatChoice;
@@ -50,7 +50,7 @@ public class NewJFrame extends javax.swing.JFrame {
 	* Auto-generated main method to display this JFrame
 	*/
 	
-	public NewJFrame(Main controller) {		
+	public GUIFrame(Main controller) {		
 		super();
 		
 		this.controller = controller;
