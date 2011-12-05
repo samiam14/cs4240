@@ -1,7 +1,6 @@
 package edu.virginia.cs4240.webmetrics;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.net.*;
 import java.util.*;
 
@@ -42,7 +41,7 @@ public class MichaelStuff {
 		for(String s: ElementTypes(doc)){
 			System.out.println(s);
 		}
-		
+		resList(doc);
 	}
 	//returns page size in human readable form
 	//code taken from http://stackoverflow.com/questions/3758606/how-to-convert-byte-size-into-human-readable-format-in-java
@@ -102,5 +101,12 @@ public class MichaelStuff {
 		//Get page size
 		String size = hrbCount(pageSize, false);
 		return size;
+	}
+	//print list of resources
+	public static void resList(Document doc){
+		Elements resources = doc.getElementsByTag("link");
+		for(Element e: resources){
+			System.out.println(e.toString());
+		}
 	}
 }
