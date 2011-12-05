@@ -1,9 +1,10 @@
 package edu.virginia.cs4240.webmetrics.gui;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+
 import javax.swing.BorderFactory;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
@@ -11,8 +12,6 @@ import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JFormattedTextField;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
@@ -20,12 +19,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.LayoutStyle;
-
 import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.SwingUtilities;
-
 import edu.virginia.cs4240.webmetrics.Main;
 
 
@@ -41,13 +36,12 @@ import edu.virginia.cs4240.webmetrics.Main;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class NewJFrame extends javax.swing.JFrame {
+public class GUIFrame extends javax.swing.JFrame {
 	private JPanel jPanel1;
 	private JButton Fetch;
 	private JComboBox StatChoice;
 	private JTextPane htmlPage;
 	private JTextArea StatModule;
-	private JSplitPane jSplitPane1;
 	private JLabel text1;
 	private JTextField urlInput;
 	private Main controller;
@@ -56,7 +50,7 @@ public class NewJFrame extends javax.swing.JFrame {
 	* Auto-generated main method to display this JFrame
 	*/
 	
-	public NewJFrame(Main controller) {		
+	public GUIFrame(Main controller) {		
 		super();
 		
 		this.controller = controller;
@@ -78,7 +72,11 @@ public class NewJFrame extends javax.swing.JFrame {
 					Fetch.addMouseListener(new MouseAdapter() {
 						public void mouseClicked(MouseEvent evt) {
 							String url= urlInput.getText();
-							controller.fetchPage(url);
+							try {
+								controller.fetchPage(url);
+							} catch(IOException e) {
+								// Alert the user that the page doesn't work
+							}
 						}
 					});
 				}
@@ -102,14 +100,14 @@ public class NewJFrame extends javax.swing.JFrame {
 				{
 					StatModule = new JTextArea();
 					StatModule.setText("StatModule");
-					StatModule.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+					StatModule.setBorder(BorderFactory.createTitledBorder(""));
 					StatModule.setEditable(false);
 				}
 				{
 					text1 = new JLabel();
 					text1.setText("Input HMTL:");
 				}
-				
+
 				jPanel1Layout.setHorizontalGroup(jPanel1Layout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(jPanel1Layout.createParallelGroup()
@@ -138,8 +136,8 @@ public class NewJFrame extends javax.swing.JFrame {
 					.addGroup(jPanel1Layout.createParallelGroup()
 					    .addGroup(GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
 					        .addComponent(StatChoice, 0, 24, Short.MAX_VALUE)
-					        .addGap(30)
-					        .addComponent(StatModule, GroupLayout.PREFERRED_SIZE, 390, GroupLayout.PREFERRED_SIZE))
+					        .addGap(20)
+					        .addComponent(StatModule, GroupLayout.PREFERRED_SIZE, 400, GroupLayout.PREFERRED_SIZE))
 					    .addComponent(htmlPage, GroupLayout.Alignment.LEADING, 0, 444, Short.MAX_VALUE))
 					.addContainerGap(17, 17));
 			}
