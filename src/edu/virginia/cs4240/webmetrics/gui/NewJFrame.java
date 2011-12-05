@@ -5,8 +5,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
@@ -14,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.LayoutStyle;
 
@@ -40,14 +44,12 @@ import edu.virginia.cs4240.webmetrics.Main;
 public class NewJFrame extends javax.swing.JFrame {
 	private JPanel jPanel1;
 	private JButton Fetch;
-	private JTextPane jTextPane1;
-	private JTextArea jTextArea3;
-	private JTextArea jTextArea2;
-	private JTextArea jTextArea1;
+	private JComboBox StatChoice;
+	private JTextPane htmlPage;
+	private JTextArea StatModule;
 	private JSplitPane jSplitPane1;
-	private JLabel jLabel1;
-	private JFormattedTextField jFormattedTextField1;
-	private JButton Cancel;
+	private JLabel text1;
+	private JTextField urlInput;
 	private Main controller;
 
 	/**
@@ -70,96 +72,76 @@ public class NewJFrame extends javax.swing.JFrame {
 				jPanel1.setLayout(jPanel1Layout);
 				getContentPane().add(jPanel1, BorderLayout.CENTER);
 				{
-					Cancel = new JButton();
-					Cancel.setText("Cancel");
-					Cancel.setRolloverEnabled(true);
-									}
-				{
 					Fetch = new JButton();
 					Fetch.setText("Fetch");
 					Fetch.setRolloverEnabled(true);
 					Fetch.addMouseListener(new MouseAdapter() {
 						public void mouseClicked(MouseEvent evt) {
-							String x= (String) jFormattedTextField1.getValue();
-							controller.fetchPage(x);
+							String url= urlInput.getText();
+							controller.fetchPage(url);
 						}
 					});
 				}
 				{
-					jFormattedTextField1 = new JFormattedTextField();
+					urlInput = new JTextField();
 				}
 				{
-					jTextArea1 = new JTextArea();
-					jTextArea1.setText("Module2");
-					jTextArea1.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
-					jTextArea1.setEditable(false);
+					htmlPage = new JTextPane();
+					htmlPage.setText("HTML PAGE");
+					htmlPage.setEditable(false);
+					htmlPage.setBorder(BorderFactory.createTitledBorder(""));
+					htmlPage.setOpaque(false);
 				}
 				{
-					jTextPane1 = new JTextPane();
-					jTextPane1.setText("HTML PAGE");
-					jTextPane1.setEditable(false);
-					jTextPane1.setBorder(BorderFactory.createTitledBorder(""));
+					ComboBoxModel StatChoiceModel = 
+							new DefaultComboBoxModel(
+									new String[] { "All Statistics", "Link Statistics", "Element Statistics", "Resource Statistics","Page Statistics","Style Statistics" });
+					StatChoice = new JComboBox();
+					StatChoice.setModel(StatChoiceModel);
 				}
 				{
-					jTextArea2 = new JTextArea();
-					jTextArea2.setText("Module1");
-					jTextArea2.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
-					jTextArea2.setEditable(false);
+					StatModule = new JTextArea();
+					StatModule.setText("StatModule");
+					StatModule.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+					StatModule.setEditable(false);
 				}
 				{
-					jTextArea3 = new JTextArea();
-					jTextArea3.setText("Module3");
-					jTextArea3.setEditable(false);
-					jTextArea3.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+					text1 = new JLabel();
+					text1.setText("Input HMTL:");
 				}
-				{
-					jLabel1 = new JLabel();
-					jLabel1.setText("Input HMTL:");
-				}
-				{
-					jSplitPane1 = new JSplitPane();
-				}
+				
 				jPanel1Layout.setHorizontalGroup(jPanel1Layout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(jPanel1Layout.createParallelGroup()
 					    .addGroup(GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
 					        .addGroup(jPanel1Layout.createParallelGroup()
-					            .addComponent(jTextArea3, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 242, GroupLayout.PREFERRED_SIZE)
-					            .addComponent(jTextArea2, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 242, GroupLayout.PREFERRED_SIZE)
-					            .addComponent(jTextArea1, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 242, GroupLayout.PREFERRED_SIZE))
+					            .addComponent(StatModule, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 242, GroupLayout.PREFERRED_SIZE)
+					            .addComponent(StatChoice, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 242, GroupLayout.PREFERRED_SIZE))
 					        .addGap(22)
-					        .addComponent(jTextPane1, GroupLayout.PREFERRED_SIZE, 467, GroupLayout.PREFERRED_SIZE)
-					        .addGap(0, 14, Short.MAX_VALUE))
+					        .addComponent(htmlPage, GroupLayout.PREFERRED_SIZE, 467, GroupLayout.PREFERRED_SIZE)
+					        .addGap(0, 0, Short.MAX_VALUE))
 					    .addGroup(GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-					        .addGap(0, 18, Short.MAX_VALUE)
-					        .addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+					        .addPreferredGap(StatModule, text1, LayoutStyle.ComponentPlacement.INDENT)
+					        .addComponent(text1, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
 					        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-					        .addComponent(jFormattedTextField1, GroupLayout.PREFERRED_SIZE, 529, GroupLayout.PREFERRED_SIZE)
-					        .addGroup(jPanel1Layout.createParallelGroup()
-					            .addComponent(Cancel, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
-					            .addGroup(GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-					                .addPreferredGap(Cancel, Fetch, LayoutStyle.ComponentPlacement.INDENT)
-					                .addComponent(Fetch, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)))))
-					.addContainerGap());
+					        .addComponent(urlInput, 0, 522, Short.MAX_VALUE)
+					        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+					        .addComponent(Fetch, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(24, 24));
 				jPanel1Layout.setVerticalGroup(jPanel1Layout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-					    .addComponent(jFormattedTextField1, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-					    .addComponent(Fetch, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-					    .addComponent(jLabel1, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(32)
+					    .addComponent(urlInput, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+					    .addComponent(text1, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+					    .addComponent(Fetch, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 					.addGroup(jPanel1Layout.createParallelGroup()
 					    .addGroup(GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-					        .addComponent(jTextArea2, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE)
-					        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-					        .addComponent(jTextArea1, GroupLayout.PREFERRED_SIZE, 134, GroupLayout.PREFERRED_SIZE)
-					        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-					        .addComponent(jTextArea3, 0, 128, Short.MAX_VALUE))
-					    .addGroup(GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-					        .addComponent(jTextPane1, 0, 396, Short.MAX_VALUE)
-					        .addGap(6)))
-					.addComponent(Cancel, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap());
+					        .addComponent(StatChoice, 0, 24, Short.MAX_VALUE)
+					        .addGap(30)
+					        .addComponent(StatModule, GroupLayout.PREFERRED_SIZE, 390, GroupLayout.PREFERRED_SIZE))
+					    .addComponent(htmlPage, GroupLayout.Alignment.LEADING, 0, 444, Short.MAX_VALUE))
+					.addContainerGap(17, 17));
 			}
 			pack();
 			this.setSize(786, 555);
@@ -178,5 +160,6 @@ public class NewJFrame extends javax.swing.JFrame {
 		System.out.println("Fetch.mouseClicked, event="+evt);
 		//TODO add your code for Fetch.mouseClicked
 	}
+
 
 }
