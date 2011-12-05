@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+
 import javax.swing.BorderFactory;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
@@ -78,7 +80,11 @@ public class NewJFrame extends javax.swing.JFrame {
 					Fetch.addMouseListener(new MouseAdapter() {
 						public void mouseClicked(MouseEvent evt) {
 							String url= urlInput.getText();
-							controller.fetchPage(url);
+							try {
+								controller.fetchPage(url);
+							} catch(IOException e) {
+								// Alert the user that the page doesn't work
+							}
 						}
 					});
 				}
