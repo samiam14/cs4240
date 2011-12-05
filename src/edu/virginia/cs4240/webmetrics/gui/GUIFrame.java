@@ -72,9 +72,11 @@ public class GUIFrame extends javax.swing.JFrame {
 					Fetch.addMouseListener(new MouseAdapter() {
 						public void mouseClicked(MouseEvent evt) {
 							String url= urlInput.getText();
+							String statChoice = (String) StatChoice.getSelectedItem();
 							try {
 								controller.fetchPage(url);
 							} catch(IOException e) {
+								urlInput.setText("Invalid url");
 								// Alert the user that the page doesn't work
 							}
 						}
@@ -105,7 +107,7 @@ public class GUIFrame extends javax.swing.JFrame {
 				}
 				{
 					text1 = new JLabel();
-					text1.setText("Input HMTL:");
+					text1.setText("Input URL:");
 				}
 
 				jPanel1Layout.setHorizontalGroup(jPanel1Layout.createSequentialGroup()
