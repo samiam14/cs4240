@@ -36,10 +36,16 @@ public class PageModule extends Module {
 	
 	public String pageSize(String pagename)throws IOException{
 		HttpURLConnection conn = (HttpURLConnection) new URL(pagename).openConnection();
-		long pageSize = conn.getContentLength(); 
-		//Get page size
-		String size = hrbCount(pageSize, false);
-		String retVal = "The size of the web page is: "+size+"\n";
+		long pageSize = conn.getContentLength();
+		String retVal = null;
+		if(pageSize == -1){
+			return "The size of the web page is unpublished.";
+		}
+		else{
+			String size = hrbCount(pageSize, false);
+			System.out.println(size);
+			retVal = "The size of the web page is: "+size+"\n";	
+		}
 		return retVal;
 	}
 	

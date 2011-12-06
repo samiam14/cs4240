@@ -70,7 +70,7 @@ public class ElementModule extends Module {
 	//returns number of images in web page
 	public static String numImages(Document doc){
 		Elements images = doc.getElementsByTag("img");
-		String retVal = images.size()+"\n";
+		String retVal = "Number of Images: " +images.size()+"\n";
 		return retVal;
 	}
 
