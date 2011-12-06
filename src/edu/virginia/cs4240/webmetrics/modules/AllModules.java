@@ -12,10 +12,13 @@ public class AllModules extends Module {
 	
 	@Override
 	public String getStatistics() {
+		StringBuilder displayBuilder = new StringBuilder(1024);
 		for(DisplayOption d : options) {
-			d.fetchOptionStatistics();
+			displayBuilder.append(d.getTitle() + "\n");
+			displayBuilder.append(d.fetchOptionStatistics());
+			displayBuilder.append("\n\n");
 		}
-		return null;
+		return displayBuilder.toString();
 	}
 
 }
