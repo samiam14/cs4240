@@ -18,7 +18,7 @@ public class PageModule extends Module {
 		return stats.toString();
 	}
 	
-	public static int maxTreeDepth(Element root) {
+	public int maxTreeDepth(Element root) {
 		List<Element> children = root.children();
 		int max = 0;
 		for(Element c : children) {
@@ -27,7 +27,7 @@ public class PageModule extends Module {
 				max = maxChildDepth;
 			}
 		}
-		setScore(getScore() + 2);
+		score += 2;
 		return 1+max;
 	}
 	
@@ -47,7 +47,7 @@ public class PageModule extends Module {
 			System.out.println(size);
 			retVal = "The size of the web page is: "+size+"\n";	
 		}
-		setScore(getScore()+(double)pageSize);
+		score += pageSize;
 		return retVal;
 	}
 	

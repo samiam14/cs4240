@@ -29,7 +29,7 @@ public class ElementModule extends Module {
 	}
 	
 	//returns a string of tag names in given doc
-	public static String ElementTypes(Document doc){
+	public String ElementTypes(Document doc){
 		Elements all = doc.getAllElements();
 		
 		ArrayList<String> tagList = new ArrayList<String>();
@@ -41,11 +41,11 @@ public class ElementModule extends Module {
 				tagList.add(tagName);
 			}
 		}
-		setScore(getScore()+tagList.size());
+		score += tagList.size();
 		return retString+"\n";
 	}
 	//returns string with num of links, total, internal, external
-	public static String numLinks(Document doc, String host){
+	public String numLinks(Document doc, String host){
 		//Get all the link elements
 		Elements links = doc.getElementsByTag("a");
 		
@@ -66,26 +66,26 @@ public class ElementModule extends Module {
 		}
 		String ret = "Total links: "+linkCount+"\nInternal links: "+iLinks
 		+"\nExternal links: "+eLinks;
-		setScore(getScore()+iLinks+(2*eLinks));
+		score += iLinks+(2*eLinks);
 		return ret+"\n";
 	}
 	//returns number of images in web page
-	public static String numImages(Document doc){
+	public String numImages(Document doc){
 		Elements images = doc.getElementsByTag("img");
 		String retVal = "Number of Images: " +images.size()+"\n";
-		setScore(getScore()+(3*images.size()));
+		score += (3*images.size());
 		return retVal;
 	}
 
 	//return list of resources
-	public static String resList(Document doc){
+	public String resList(Document doc){
 		StringBuilder retString = new StringBuilder(256);
 		retString.append("List of resources:\n");
 		Elements resources = doc.getElementsByTag("link");
 		for(Element e: resources){
 			retString.append(e.toString()+"\n");
 		}
-		setScore(getScore()+resources.size());
+		score += resources.size();
 		return retString.toString();
 	}
 }
