@@ -23,6 +23,7 @@ public class Main {
 	public String fetchPage(String url) throws IOException {
 		Document page = Jsoup.connect(url).get();
 		Module.setHost(Module.extractHost(url));
+		Module.setUrl(url);
 		Module.setDocument(page); // Shared resource for all Modules
 		
 		return page.toString();

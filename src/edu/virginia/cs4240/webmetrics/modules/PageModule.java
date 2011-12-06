@@ -13,7 +13,10 @@ public class PageModule extends Module {
 	}
 
 	@Override
-	public String getStatistics() {
+	public String getStatistics() throws IOException {
+		StringBuilder stats = new StringBuilder(256);
+		stats.append("The maximum depth of the webpage is: "+(maxTreeDepth(document))+"\n");
+		stats.append(pageSize(url));
 		return null;
 	}
 	
@@ -26,7 +29,8 @@ public class PageModule extends Module {
 				max = maxChildDepth;
 			}
 		}
-		return 1 + max;
+		
+		return 1+max;
 	}
 	
 	public String getHeaders() {
@@ -38,7 +42,8 @@ public class PageModule extends Module {
 		long pageSize = conn.getContentLength(); 
 		//Get page size
 		String size = hrbCount(pageSize, false);
-		return size;
+		String retVal = "The size of the web page is: "+size+"\n";
+		return retVal;
 	}
 	
 	private String hrbCount(long bytes, boolean si) {

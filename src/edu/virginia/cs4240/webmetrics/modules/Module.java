@@ -1,17 +1,23 @@
 package edu.virginia.cs4240.webmetrics.modules;
 
+import java.io.IOException;
+
 import org.jsoup.nodes.Document;
 
 
 public abstract class Module {
 	protected static Document document;
 	protected static String host;
+	protected static String url;
 	
 	public static void setDocument(Document d) {
 		Module.document = d;
 	}
 	public static void setHost(String h){
 		Module.host = h;
+	}
+	public static void setUrl(String u){
+		Module.url = u;
 	}
 	public static String extractHost(String url){
 		int begin = 0;
@@ -38,5 +44,5 @@ public abstract class Module {
 		System.out.println(hostString);
 		return hostString;
 	}
-	public abstract String getStatistics();
+	public abstract String getStatistics() throws IOException;
 }
