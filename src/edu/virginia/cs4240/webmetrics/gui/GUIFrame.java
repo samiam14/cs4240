@@ -1,9 +1,8 @@
 package edu.virginia.cs4240.webmetrics.gui;
-import java.awt.BorderLayout;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
-
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
@@ -11,15 +10,12 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JScrollBar;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
-
 import javax.swing.WindowConstants;
-import javax.swing.SwingUtilities;
-
 import edu.virginia.cs4240.webmetrics.Main;
 
 
@@ -45,11 +41,12 @@ public class GUIFrame extends javax.swing.JFrame {
 	private JTextField urlText;
 	private JTextArea htmlText;
 	private Main controller;
+	
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
 
-	public GUIFrame(Main controller) {		
+	public GUIFrame(Main controller) throws IOException{		
 		super();
 		
 		this.controller = controller;
@@ -93,10 +90,13 @@ public class GUIFrame extends javax.swing.JFrame {
 					public void mouseClicked(MouseEvent evt) {
 						String url= urlText.getText();
 						String choice = (String) statChoice.getSelectedItem();
+					
 						try {
-							htmlText.setText(controller.fetchPage(url));
-						} catch(IOException e) {
-							urlText.setText("Invalid url");
+							String html = controller.fetchPage(url);
+							htmlText.setText(html);
+							//statText.setText(STAT CALL depending on "choice")
+						} catch(Exception e) {
+							JOptionPane.showMessageDialog(null, "Invalid URL", "Error", JOptionPane.ERROR_MESSAGE);
 							// Alert the user that the page doesn't work
 						}
 					}
