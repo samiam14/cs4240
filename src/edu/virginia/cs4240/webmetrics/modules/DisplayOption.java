@@ -1,5 +1,7 @@
 package edu.virginia.cs4240.webmetrics.modules;
 
+import java.io.IOException;
+
 public class DisplayOption {
 
 	private Module strategy;
@@ -14,7 +16,7 @@ public class DisplayOption {
 		return title;
 	}
 	
-	public String fetchOptionStatistics() {
+	public String fetchOptionStatistics() throws IOException {
 		return strategy.getStatistics();
 	}
 	

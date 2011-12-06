@@ -17,10 +17,9 @@ public class ElementModule extends Module {
 	//
 	//
 	
-	protected static String host = "google.com";
+	public static String host = "google.com";
 	public ElementModule() {
 	}
-	
 	@Override
 	public String getStatistics() {
 		StringBuilder statBuild = new StringBuilder(256);
