@@ -6,13 +6,13 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-public class WebMetric {
+public class WebRequest {
 
 	private Document document;
 	private Connection connection;
 	private IOException exception = null;
 	
-	public WebMetric(String url) {
+	public WebRequest(String url) {
 		connection = Jsoup.connect(url);
 	}
 	
