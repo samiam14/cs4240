@@ -28,14 +28,20 @@ public class PageModule extends Module {
 		}
 		return 1 + max;
 	}
-	public static String pageSize(String pagename)throws IOException{
+	
+	public String getHeaders() {
+		return null;
+	}
+	
+	public String pageSize(String pagename)throws IOException{
 		HttpURLConnection conn = (HttpURLConnection) new URL(pagename).openConnection();
 		long pageSize = conn.getContentLength(); 
 		//Get page size
 		String size = hrbCount(pageSize, false);
 		return size;
 	}
-	public static String hrbCount(long bytes, boolean si) {
+	
+	private String hrbCount(long bytes, boolean si) {
 	    int unit = si ? 1000 : 1024;
 	    if (bytes < unit) return bytes + " B";
 	    int exp = (int) (Math.log(bytes) / Math.log(unit));
