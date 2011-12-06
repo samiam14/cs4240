@@ -17,4 +17,9 @@ public class DisplayOption {
 	public String fetchOptionStatistics() {
 		return strategy.getStatistics();
 	}
+	
+	@Override
+	public String toString(){
+		return title;
+	}
 }
