@@ -11,7 +11,7 @@ import edu.virginia.cs4240.webmetrics.gui.GUIFrame;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		final Main controller = new Main();
 		
 		final JFrame gui = new GUIFrame(controller);
