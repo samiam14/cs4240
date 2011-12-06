@@ -80,7 +80,7 @@ public class GUIFrame extends javax.swing.JFrame {
 			}
 			{
 				text1 = new JLabel();
-				text1.setText("Input URL");
+				text1.setText("Input URL:");
 			}
 			{
 				fetch = new JButton();
@@ -101,9 +101,7 @@ public class GUIFrame extends javax.swing.JFrame {
 						}
 					}
 				});
-
-			}	
-			
+			}		
 			{
 				statText = new JTextArea();
 				jScrollPane2 = new JScrollPane(statText);
@@ -116,15 +114,15 @@ public class GUIFrame extends javax.swing.JFrame {
 			thisLayout.setVerticalGroup(thisLayout.createSequentialGroup()
 				.addContainerGap()
 				.addGroup(thisLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+				    .addComponent(urlText, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
 				    .addComponent(fetch, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-				    .addComponent(text1, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-				    .addComponent(urlText, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
+				    .addComponent(text1, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
 				.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 				.addComponent(statChoice, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
 				.addGap(16)
 				.addGroup(thisLayout.createParallelGroup()
-				    .addComponent(jScrollPane1, GroupLayout.Alignment.LEADING, 0, 350, Short.MAX_VALUE)
-				    .addComponent(jScrollPane2, GroupLayout.Alignment.LEADING, 0, 350, Short.MAX_VALUE))
+				    .addComponent(jScrollPane1, GroupLayout.Alignment.LEADING, 0, 352, Short.MAX_VALUE)
+				    .addComponent(jScrollPane2, GroupLayout.Alignment.LEADING, 0, 352, Short.MAX_VALUE))
 				.addContainerGap());
 			thisLayout.setHorizontalGroup(thisLayout.createSequentialGroup()
 				.addContainerGap(23, 23)
@@ -137,7 +135,9 @@ public class GUIFrame extends javax.swing.JFrame {
 				        .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 370, GroupLayout.PREFERRED_SIZE)
 				        .addGap(0, 0, Short.MAX_VALUE))
 				    .addGroup(GroupLayout.Alignment.LEADING, thisLayout.createSequentialGroup()
+				        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 				        .addComponent(text1, GroupLayout.PREFERRED_SIZE, 98, GroupLayout.PREFERRED_SIZE)
+				        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 				        .addComponent(urlText, 0, 415, Short.MAX_VALUE)
 				        .addGap(24)
 				        .addComponent(fetch, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)))
