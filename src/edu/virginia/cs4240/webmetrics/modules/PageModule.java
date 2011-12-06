@@ -17,7 +17,7 @@ public class PageModule extends Module {
 		StringBuilder stats = new StringBuilder(256);
 		stats.append("The maximum depth of the webpage is: "+(maxTreeDepth(document))+"\n");
 		stats.append(pageSize(url));
-		return null;
+		return stats.toString();
 	}
 	
 	public static int maxTreeDepth(Element root) {

@@ -111,7 +111,12 @@ public class GUIFrame extends javax.swing.JFrame {
 							// Alert the user that the page doesn't work
 						}
 						htmlText.setText(html);
-						statText.setText(choice.fetchOptionStatistics());
+						try {
+							statText.setText(choice.fetchOptionStatistics());
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				});
 			}		
