@@ -1,5 +1,6 @@
 package edu.virginia.cs4240.webmetrics.modules;
 
+import java.io.IOException;
 import java.util.List;
 
 public class AllModules extends Module {
@@ -11,7 +12,7 @@ public class AllModules extends Module {
 	}
 	
 	@Override
-	public String getStatistics() {
+	public String getStatistics() throws IOException {
 		StringBuilder displayBuilder = new StringBuilder(256);
 		for(DisplayOption d : options) {
 			displayBuilder.append(d.getTitle() + "\n");
