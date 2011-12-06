@@ -42,6 +42,7 @@ public class MichaelStuff {
 			System.out.println(s);
 		}
 		resList(doc);
+		System.out.println(doc.toString());
 	}
 	//returns page size in human readable form
 	//code taken from http://stackoverflow.com/questions/3758606/how-to-convert-byte-size-into-human-readable-format-in-java
