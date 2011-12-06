@@ -8,16 +8,13 @@ import java.util.List;
 import org.jsoup.nodes.Element;
 
 public class PageModule extends Module {
-	
-	public PageModule() {
-	}
 
 	@Override
 	public String getStatistics() throws IOException {
 		StringBuilder stats = new StringBuilder(256);
-		stats.append("The maximum depth of the webpage is: "+(maxTreeDepth(document))+"\n");
-		stats.append(pageSize(url));
-		return null;
+		stats.append("The maximum depth of the webpage is: "+(maxTreeDepth(request.getDocument()))+"\n");
+		stats.append(pageSize(request.getUrl()));
+		return stats.toString();
 	}
 	
 	public static int maxTreeDepth(Element root) {

@@ -21,12 +21,12 @@ public class Main {
 	}
 
 	public String fetchPage(String url) throws IOException {
-		Document page = Jsoup.connect(url).get();
-		Module.setHost(Module.extractHost(url));
-		Module.setUrl(url);
-		Module.setDocument(page); // Shared resource for all Modules
+		WebRequest req = new WebRequest(url);
+		req.validateRequest();
 		
-		return page.toString();
+		Module.setRequest(req);
+		
+		return req.getDocument().toString();
 	}
 
 }

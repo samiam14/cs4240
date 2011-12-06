@@ -11,22 +11,20 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class ElementModule extends Module {
-	//
-	//
-	//CHANGE THIS WHEN SAM GETS THE HOST FIXED!!!!!
-	//
-	//
-	
-	public static String host = "google.com";
-	public ElementModule() {
-	}
+
 	@Override
 	public String getStatistics() {
 		StringBuilder statBuild = new StringBuilder(256);
-		statBuild.append(ElementTypes(document));
-		statBuild.append(numLinks(document,host));
-		statBuild.append(numImages(document));
-		statBuild.append(resList(document));
+		Document document;
+		try {
+			document = request.getDocument();
+			statBuild.append(ElementTypes(document ));
+			statBuild.append(numLinks(document,request.getUrlHost()));
+			statBuild.append(numImages(document));
+			statBuild.append(resList(document));
+		} catch (IOException e) {
+			statBuild.append(e.getMessage());
+		}
 		return statBuild.toString();
 	}
 	
