@@ -14,6 +14,7 @@ public class PageModule extends Module {
 		StringBuilder stats = new StringBuilder(256);
 		stats.append("The maximum depth of the webpage is: "+(maxTreeDepth(request.getDocument()))+"\n");
 		stats.append(pageSize(request.getUrl()));
+		stats.append("\nPage Complexity Score: " + getScore());
 		return stats.toString();
 	}
 	
@@ -26,7 +27,7 @@ public class PageModule extends Module {
 				max = maxChildDepth;
 			}
 		}
-		
+		setScore(getScore() + 2);
 		return 1+max;
 	}
 	
@@ -46,6 +47,7 @@ public class PageModule extends Module {
 			System.out.println(size);
 			retVal = "The size of the web page is: "+size+"\n";	
 		}
+		setScore(getScore()+(double)pageSize);
 		return retVal;
 	}
 	

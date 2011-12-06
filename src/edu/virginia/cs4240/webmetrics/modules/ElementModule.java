@@ -1,4 +1,4 @@
-package edu.virginia.cs4240.webmetrics.modules;
+	package edu.virginia.cs4240.webmetrics.modules;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -11,7 +11,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class ElementModule extends Module {
-
 	@Override
 	public String getStatistics() {
 		StringBuilder statBuild = new StringBuilder(256);
@@ -22,6 +21,7 @@ public class ElementModule extends Module {
 			statBuild.append(numLinks(document,request.getUrlHost()));
 			statBuild.append(numImages(document));
 			statBuild.append(resList(document));
+			statBuild.append("Element Complexity Score: "+getScore());
 		} catch (IOException e) {
 			statBuild.append(e.getMessage());
 		}
@@ -41,6 +41,7 @@ public class ElementModule extends Module {
 				tagList.add(tagName);
 			}
 		}
+		setScore(getScore()+tagList.size());
 		return retString+"\n";
 	}
 	//returns string with num of links, total, internal, external
@@ -65,12 +66,14 @@ public class ElementModule extends Module {
 		}
 		String ret = "Total links: "+linkCount+"\nInternal links: "+iLinks
 		+"\nExternal links: "+eLinks;
+		setScore(getScore()+iLinks+(2*eLinks));
 		return ret+"\n";
 	}
 	//returns number of images in web page
 	public static String numImages(Document doc){
 		Elements images = doc.getElementsByTag("img");
 		String retVal = "Number of Images: " +images.size()+"\n";
+		setScore(getScore()+(3*images.size()));
 		return retVal;
 	}
 
@@ -82,6 +85,7 @@ public class ElementModule extends Module {
 		for(Element e: resources){
 			retString.append(e.toString()+"\n");
 		}
+		setScore(getScore()+resources.size());
 		return retString.toString();
 	}
 }
