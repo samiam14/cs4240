@@ -3,6 +3,9 @@ package edu.virginia.cs4240.webmetrics.gui;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
@@ -16,7 +19,12 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.WindowConstants;
+
 import edu.virginia.cs4240.webmetrics.Main;
+import edu.virginia.cs4240.webmetrics.modules.AllModules;
+import edu.virginia.cs4240.webmetrics.modules.DisplayOption;
+import edu.virginia.cs4240.webmetrics.modules.ElementModule;
+import edu.virginia.cs4240.webmetrics.modules.PageModule;
 
 
 /**
@@ -41,6 +49,7 @@ public class GUIFrame extends javax.swing.JFrame {
 	private JTextField urlText;
 	private JTextArea htmlText;
 	private Main controller;
+	private final LinkedList<DisplayOption> options;
 	
 	/**
 	* Auto-generated main method to display this JFrame
@@ -50,6 +59,11 @@ public class GUIFrame extends javax.swing.JFrame {
 		super();
 		
 		this.controller = controller;
+		options = new LinkedList<DisplayOption>();
+		options.add(new DisplayOption("Element Statistics", new ElementModule()));
+		options.add(new DisplayOption("Page Statistics", new PageModule()));
+		options.addFirst(new DisplayOption("All Statistics", new AllModules((List<DisplayOption>) options.clone())));
+		
 		initGUI();
 	}
 	
