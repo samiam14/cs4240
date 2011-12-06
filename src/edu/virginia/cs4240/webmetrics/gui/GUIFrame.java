@@ -1,11 +1,9 @@
 package edu.virginia.cs4240.webmetrics.gui;
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 
-import javax.swing.BorderFactory;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
@@ -13,14 +11,15 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSplitPane;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import javax.swing.LayoutStyle;
+
 import javax.swing.WindowConstants;
-import javax.swing.border.BevelBorder;
+import javax.swing.SwingUtilities;
+
 import edu.virginia.cs4240.webmetrics.Main;
 
 
@@ -37,19 +36,19 @@ import edu.virginia.cs4240.webmetrics.Main;
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
 public class GUIFrame extends javax.swing.JFrame {
-	private JPanel jPanel1;
-	private JButton Fetch;
-	private JComboBox StatChoice;
-	private JTextPane htmlPage;
-	private JTextArea StatModule;
+	private JScrollPane jScrollPane1;
+	private JButton fetch;
+	private JScrollPane jScrollPane2;
 	private JLabel text1;
-	private JTextField urlInput;
+	private JComboBox statChoice;
+	private JTextArea statText;
+	private JTextField urlText;
+	private JTextArea htmlText;
 	private Main controller;
-
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
-	
+
 	public GUIFrame(Main controller) {		
 		super();
 		
@@ -59,105 +58,96 @@ public class GUIFrame extends javax.swing.JFrame {
 	
 	private void initGUI() {
 		try {
+			GroupLayout thisLayout = new GroupLayout((JComponent)getContentPane());
+			getContentPane().setLayout(thisLayout);
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			{
-				jPanel1 = new JPanel();
-				GroupLayout jPanel1Layout = new GroupLayout((JComponent)jPanel1);
-				jPanel1.setLayout(jPanel1Layout);
-				getContentPane().add(jPanel1, BorderLayout.CENTER);
-				{
-					Fetch = new JButton();
-					Fetch.setText("Fetch");
-					Fetch.setRolloverEnabled(true);
-					Fetch.addMouseListener(new MouseAdapter() {
-						public void mouseClicked(MouseEvent evt) {
-							String url= urlInput.getText();
-							try {
-								controller.fetchPage(url);
-							} catch(IOException e) {
-								// Alert the user that the page doesn't work
-							}
-						}
-					});
-				}
-				{
-					urlInput = new JTextField();
-				}
-				{
-					htmlPage = new JTextPane();
-					htmlPage.setText("HTML PAGE");
-					htmlPage.setEditable(false);
-					htmlPage.setBorder(BorderFactory.createTitledBorder(""));
-					htmlPage.setOpaque(false);
-				}
-				{
-					ComboBoxModel StatChoiceModel = 
-							new DefaultComboBoxModel(
-									new String[] { "All Statistics", "Link Statistics", "Element Statistics", "Resource Statistics","Page Statistics","Style Statistics" });
-					StatChoice = new JComboBox();
-					StatChoice.setModel(StatChoiceModel);
-				}
-				{
-					StatModule = new JTextArea();
-					StatModule.setText("StatModule");
-					StatModule.setBorder(BorderFactory.createTitledBorder(""));
-					StatModule.setEditable(false);
-				}
-				{
-					text1 = new JLabel();
-					text1.setText("Input HMTL:");
-				}
-
-				jPanel1Layout.setHorizontalGroup(jPanel1Layout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(jPanel1Layout.createParallelGroup()
-					    .addGroup(GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-					        .addGroup(jPanel1Layout.createParallelGroup()
-					            .addComponent(StatModule, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 242, GroupLayout.PREFERRED_SIZE)
-					            .addComponent(StatChoice, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 242, GroupLayout.PREFERRED_SIZE))
-					        .addGap(22)
-					        .addComponent(htmlPage, GroupLayout.PREFERRED_SIZE, 467, GroupLayout.PREFERRED_SIZE)
-					        .addGap(0, 0, Short.MAX_VALUE))
-					    .addGroup(GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-					        .addPreferredGap(StatModule, text1, LayoutStyle.ComponentPlacement.INDENT)
-					        .addComponent(text1, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
-					        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-					        .addComponent(urlInput, 0, 522, Short.MAX_VALUE)
-					        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-					        .addComponent(Fetch, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(24, 24));
-				jPanel1Layout.setVerticalGroup(jPanel1Layout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-					    .addComponent(urlInput, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-					    .addComponent(text1, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-					    .addComponent(Fetch, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-					.addGroup(jPanel1Layout.createParallelGroup()
-					    .addGroup(GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-					        .addComponent(StatChoice, 0, 24, Short.MAX_VALUE)
-					        .addGap(20)
-					        .addComponent(StatModule, GroupLayout.PREFERRED_SIZE, 400, GroupLayout.PREFERRED_SIZE))
-					    .addComponent(htmlPage, GroupLayout.Alignment.LEADING, 0, 444, Short.MAX_VALUE))
-					.addContainerGap(17, 17));
+				htmlText = new JTextArea();
+				jScrollPane1 = new JScrollPane(htmlText);
+				jScrollPane1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+				jScrollPane1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+				htmlText.setText(" ");
+				htmlText.setPreferredSize(new java.awt.Dimension(352, 1299));
+				htmlText.setEditable(false);
 			}
+			{
+				urlText = new JTextField();
+				urlText.setText(" ");
+			}
+			{
+				ComboBoxModel statChoiceModel = 
+						new DefaultComboBoxModel(
+								new String[] { "All Statistics", "Link Statistics", "Element Statistics", "Resource Statistics","Page Statistics","Style Statistics"  });
+				statChoice = new JComboBox();
+				statChoice.setModel(statChoiceModel);
+			}
+			{
+				text1 = new JLabel();
+				text1.setText("Input URL");
+			}
+			{
+				fetch = new JButton();
+				fetch.setText("Fetch");
+				fetch.setRolloverEnabled(true);
+				fetch.addMouseListener(new MouseAdapter() {
+					public void mouseClicked(MouseEvent evt) {
+						String url= urlText.getText();
+						String choice = (String) statChoice.getSelectedItem();
+						try {
+							htmlText.setText(controller.fetchPage(url));
+						} catch(IOException e) {
+							urlText.setText("Invalid url");
+							// Alert the user that the page doesn't work
+						}
+					}
+				});
+
+			}	
+			
+			{
+				statText = new JTextArea();
+				jScrollPane2 = new JScrollPane(statText);
+				jScrollPane2.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+				jScrollPane2.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);	
+			
+				statText.setText(" ");
+				statText.setEditable(false);
+			}
+			thisLayout.setVerticalGroup(thisLayout.createSequentialGroup()
+				.addContainerGap()
+				.addGroup(thisLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+				    .addComponent(fetch, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+				    .addComponent(text1, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+				    .addComponent(urlText, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
+				.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+				.addComponent(statChoice, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+				.addGap(16)
+				.addGroup(thisLayout.createParallelGroup()
+				    .addComponent(jScrollPane1, GroupLayout.Alignment.LEADING, 0, 350, Short.MAX_VALUE)
+				    .addComponent(jScrollPane2, GroupLayout.Alignment.LEADING, 0, 350, Short.MAX_VALUE))
+				.addContainerGap());
+			thisLayout.setHorizontalGroup(thisLayout.createSequentialGroup()
+				.addContainerGap(23, 23)
+				.addGroup(thisLayout.createParallelGroup()
+				    .addGroup(GroupLayout.Alignment.LEADING, thisLayout.createSequentialGroup()
+				        .addGroup(thisLayout.createParallelGroup()
+				            .addComponent(jScrollPane2, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 242, GroupLayout.PREFERRED_SIZE)
+				            .addComponent(statChoice, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 242, GroupLayout.PREFERRED_SIZE))
+				        .addGap(26)
+				        .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 370, GroupLayout.PREFERRED_SIZE)
+				        .addGap(0, 0, Short.MAX_VALUE))
+				    .addGroup(GroupLayout.Alignment.LEADING, thisLayout.createSequentialGroup()
+				        .addComponent(text1, GroupLayout.PREFERRED_SIZE, 98, GroupLayout.PREFERRED_SIZE)
+				        .addComponent(urlText, 0, 415, Short.MAX_VALUE)
+				        .addGap(24)
+				        .addComponent(fetch, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)))
+				.addContainerGap(17, 17));
 			pack();
-			this.setSize(786, 555);
+			this.setSize(696, 495);
 		} catch (Exception e) {
 		    //add your error handling code here
 			e.printStackTrace();
 		}
 	}
-	
-	private void FetchActionPerformed(ActionEvent evt) {
-		System.out.println("Fetch.actionPerformed, event="+evt);
-		//TODO add your code for Fetch.actionPerformed
-	}
-	
-	private void FetchMouseClicked(MouseEvent evt) {
-		System.out.println("Fetch.mouseClicked, event="+evt);
-		//TODO add your code for Fetch.mouseClicked
-	}
-
 
 }

@@ -24,8 +24,9 @@ public class Main {
 		// attributes, etc.
 	}
 
-	public void fetchPage(String url) throws IOException {
+	public String fetchPage(String url) throws IOException {
 		Document page = Jsoup.connect(url).get();
+		return page.toString();
 	}
 
 }
