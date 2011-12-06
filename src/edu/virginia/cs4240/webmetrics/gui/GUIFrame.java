@@ -1,8 +1,12 @@
 package edu.virginia.cs4240.webmetrics.gui;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,16 +18,20 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.WindowConstants;
 
 import edu.virginia.cs4240.webmetrics.Main;
+import edu.virginia.cs4240.webmetrics.WebRequest;
 import edu.virginia.cs4240.webmetrics.modules.AllModules;
 import edu.virginia.cs4240.webmetrics.modules.DisplayOption;
 import edu.virginia.cs4240.webmetrics.modules.ElementModule;
+import edu.virginia.cs4240.webmetrics.modules.Module;
 import edu.virginia.cs4240.webmetrics.modules.PageModule;
 
 
@@ -48,37 +56,37 @@ public class GUIFrame extends javax.swing.JFrame {
 	private JTextArea statText;
 	private JTextField urlText;
 	private JTextArea htmlText;
-	private Main controller;
 	private final LinkedList<DisplayOption> options;
+	private final Dimension screenSize;
 	
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
 
-	public GUIFrame(Main controller) throws IOException{		
-		super();
+	public GUIFrame(String title) {		
+		super(title);
 		
-		this.controller = controller;
 		options = new LinkedList<DisplayOption>();
 		options.add(new DisplayOption("Element Statistics", new ElementModule()));
 		options.add(new DisplayOption("Page Statistics", new PageModule()));
 		options.addFirst(new DisplayOption("All Statistics", new AllModules((List<DisplayOption>) options.clone())));
 		
+		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		initGUI();
 	}
 	
 	private void initGUI() {
 		try {
-			GroupLayout thisLayout = new GroupLayout((JComponent)getContentPane());
+			BorderLayout thisLayout = new BorderLayout();
 			getContentPane().setLayout(thisLayout);
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			{
 				htmlText = new JTextArea();
 				jScrollPane1 = new JScrollPane(htmlText);
-				jScrollPane1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-				jScrollPane1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+				jScrollPane1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+				jScrollPane1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 				htmlText.setText(" ");
-				htmlText.setPreferredSize(new java.awt.Dimension(352, 1299));
+				//htmlText.setPreferredSize(new java.awt.Dimension(352, 1299));
 				htmlText.setEditable(false);
 			}
 			{
@@ -103,19 +111,19 @@ public class GUIFrame extends javax.swing.JFrame {
 					public void mouseClicked(MouseEvent evt) {
 						String url= urlText.getText();
 						DisplayOption choice = (DisplayOption) statChoice.getSelectedItem();
-						String html = "";
 						try {
-							html = controller.fetchPage(url);
-						} catch(Exception e) {
-							JOptionPane.showMessageDialog(null, "Invalid URL", "Error", JOptionPane.ERROR_MESSAGE);
-							// Alert the user that the page doesn't work
-						}
-						htmlText.setText(html);
-						try {
+							WebRequest req = new WebRequest(url);
+							req.validateRequest();
+							Module.setRequest(req);
+							
+							String html = req.getDocument().toString();
+							htmlText.setText(html);
 							statText.setText(choice.fetchOptionStatistics());
+						} catch(IllegalArgumentException e) {
+							JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+							// Alert the user that the page doesn't work
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							JOptionPane.showMessageDialog(null, "Error parsing document:\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 						}
 					}
 				});
@@ -123,48 +131,28 @@ public class GUIFrame extends javax.swing.JFrame {
 			{
 				statText = new JTextArea();
 				jScrollPane2 = new JScrollPane(statText);
-				jScrollPane2.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-				jScrollPane2.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);	
+				jScrollPane2.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+				jScrollPane2.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);	
 			
 				statText.setText(" ");
 				statText.setEditable(false);
 			}
-			thisLayout.setVerticalGroup(thisLayout.createSequentialGroup()
-				.addContainerGap()
-				.addGroup(thisLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-				    .addComponent(urlText, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-				    .addComponent(fetch, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-				    .addComponent(text1, GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
-				.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-				.addComponent(statChoice, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-				.addGap(16)
-				.addGroup(thisLayout.createParallelGroup()
-				    .addComponent(jScrollPane1, GroupLayout.Alignment.LEADING, 0, 352, Short.MAX_VALUE)
-				    .addComponent(jScrollPane2, GroupLayout.Alignment.LEADING, 0, 352, Short.MAX_VALUE))
-				.addContainerGap());
-			thisLayout.setHorizontalGroup(thisLayout.createSequentialGroup()
-				.addContainerGap(23, 23)
-				.addGroup(thisLayout.createParallelGroup()
-				    .addGroup(GroupLayout.Alignment.LEADING, thisLayout.createSequentialGroup()
-				        .addGroup(thisLayout.createParallelGroup()
-				            .addComponent(jScrollPane2, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 242, GroupLayout.PREFERRED_SIZE)
-				            .addComponent(statChoice, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 242, GroupLayout.PREFERRED_SIZE))
-				        .addGap(26)
-				        .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 370, GroupLayout.PREFERRED_SIZE)
-				        .addGap(0, 0, Short.MAX_VALUE))
-				    .addGroup(GroupLayout.Alignment.LEADING, thisLayout.createSequentialGroup()
-				        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-				        .addComponent(text1, GroupLayout.PREFERRED_SIZE, 98, GroupLayout.PREFERRED_SIZE)
-				        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-				        .addComponent(urlText, 0, 415, Short.MAX_VALUE)
-				        .addGap(24)
-				        .addComponent(fetch, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)))
-				.addContainerGap(17, 17));
+			
+			JPanel northPanel = new JPanel();
+			northPanel.add(text1);
+			northPanel.add(urlText);
+			northPanel.add(fetch);
+			add(northPanel, BorderLayout.NORTH);
+			JPanel leftPanel = new JPanel(new BorderLayout());
+			leftPanel.add(statChoice, BorderLayout.NORTH);
+			leftPanel.add(jScrollPane2, BorderLayout.CENTER);
+			JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, jScrollPane1);
+			splitPane.setDividerLocation((int)(screenSize.getWidth() * 0.3));
+			add(splitPane, BorderLayout.CENTER);
 			pack();
-			this.setSize(696, 495);
+			this.setSize(screenSize);
 		} catch (Exception e) {
-		    //add your error handling code here
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "There was an error creating the GUI.", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

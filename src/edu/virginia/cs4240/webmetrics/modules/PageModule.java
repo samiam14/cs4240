@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
+import java.util.Map;
 
+import org.jsoup.Connection;
 import org.jsoup.nodes.Element;
 
 public class PageModule extends Module {
@@ -13,8 +15,12 @@ public class PageModule extends Module {
 	public String getStatistics() throws IOException {
 		StringBuilder stats = new StringBuilder(256);
 		stats.append("The maximum depth of the webpage is: "+(maxTreeDepth(request.getDocument()))+"\n");
-		stats.append(pageSize(request.getUrl()));
+		stats.append(pageSize());
 		stats.append("\nPage Complexity Score: " + getScore());
+		stats.append("\nHeaders sent:\n");
+		stats.append(getRequestHeaders());
+		stats.append("\nHeaders recieved:\n");
+		stats.append(getResponseHeaders());
 		return stats.toString();
 	}
 	
@@ -31,24 +37,44 @@ public class PageModule extends Module {
 		return 1+max;
 	}
 	
-	public String getHeaders() {
-		return null;
+	public String getResponseHeaders() {
+		Connection.Response res = request.getConnection().response();
+		StringBuilder build = new StringBuilder(128);
+		Map<String, String> headers = res.headers();
+		for (Map.Entry<String, String> entry : headers.entrySet()) {
+			build.append("  ");
+			build.append(entry.getKey());
+			build.append(": ");
+			build.append(entry.getValue());
+			build.append("\n");
+		}
+		return build.toString();
 	}
 	
-	public String pageSize(String pagename)throws IOException{
-		HttpURLConnection conn = (HttpURLConnection) new URL(pagename).openConnection();
-		long pageSize = conn.getContentLength();
-		String retVal = null;
-		if(pageSize == -1){
+	public String getRequestHeaders() {
+		Connection.Request req = request.getConnection().request();
+		StringBuilder build = new StringBuilder(128);
+		Map<String, String> headers = req.headers();
+		for (Map.Entry<String, String> entry : headers.entrySet()) {
+			build.append("  ");
+			build.append(entry.getKey());
+			build.append(": ");
+			build.append(entry.getValue());
+			build.append("\n");
+		}
+		return build.toString();
+	}
+	
+	public String pageSize() {
+		Connection.Response res = request.getConnection().response();
+		String contentLength = res.header("Content-Length");
+		try {
+			int pageSize = Integer.parseInt(contentLength);
+			score += pageSize;
+			return "The size of the web page is: " + hrbCount(pageSize, true);
+		} catch(NumberFormatException e) {
 			return "The size of the web page is unpublished.";
 		}
-		else{
-			String size = hrbCount(pageSize, false);
-			System.out.println(size);
-			retVal = "The size of the web page is: "+size+"\n";	
-		}
-		score += pageSize;
-		return retVal;
 	}
 	
 	private String hrbCount(long bytes, boolean si) {

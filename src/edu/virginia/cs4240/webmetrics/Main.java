@@ -12,21 +12,9 @@ import edu.virginia.cs4240.webmetrics.modules.Module;
 
 public class Main {
 	
-	public static void main(String[] args) throws IOException {
-		final Main controller = new Main();
-		
-		final JFrame gui = new GUIFrame(controller);
+	public static void main(String[] args) throws IOException {		
+		final JFrame gui = new GUIFrame("WebMetrics");
 		gui.setLocationRelativeTo(null);
 		gui.setVisible(true);
 	}
-
-	public String fetchPage(String url) throws IOException {
-		WebRequest req = new WebRequest(url);
-		req.validateRequest();
-		
-		Module.setRequest(req);
-		
-		return req.getDocument().toString();
-	}
-
 }
