@@ -83,12 +83,11 @@ public class GUIFrame extends javax.swing.JFrame {
 			}
 			{
 				urlText = new JTextField();
-				urlText.setText(" ");
+				urlText.setText("https://www.google.com");
 			}
 			{
 				ComboBoxModel statChoiceModel = 
-						new DefaultComboBoxModel(
-								new String[] { "All Statistics", "Link Statistics", "Element Statistics", "Resource Statistics","Page Statistics","Style Statistics"  });
+						new DefaultComboBoxModel(options.toArray());
 				statChoice = new JComboBox();
 				statChoice.setModel(statChoiceModel);
 			}
@@ -103,15 +102,20 @@ public class GUIFrame extends javax.swing.JFrame {
 				fetch.addMouseListener(new MouseAdapter() {
 					public void mouseClicked(MouseEvent evt) {
 						String url= urlText.getText();
-						String choice = (String) statChoice.getSelectedItem();
-					
+						DisplayOption choice = (DisplayOption) statChoice.getSelectedItem();
+						String html = "";
 						try {
-							String html = controller.fetchPage(url);
-							htmlText.setText(html);
-							//statText.setText(STAT CALL depending on "choice")
+							html = controller.fetchPage(url);
 						} catch(Exception e) {
 							JOptionPane.showMessageDialog(null, "Invalid URL", "Error", JOptionPane.ERROR_MESSAGE);
 							// Alert the user that the page doesn't work
+						}
+						htmlText.setText(html);
+						try {
+							statText.setText(choice.fetchOptionStatistics());
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
 					}
 				});
