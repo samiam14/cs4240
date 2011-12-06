@@ -11,7 +11,13 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class ElementModule extends Module {
-	protected static String host;
+	//
+	//
+	//CHANGE THIS WHEN SAM GETS THE HOST FIXED!!!!!
+	//
+	//
+	
+	protected static String host = "google.com";
 	public ElementModule() {
 	}
 	
