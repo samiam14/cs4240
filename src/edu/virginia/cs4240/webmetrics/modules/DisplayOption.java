@@ -16,8 +16,8 @@ public class DisplayOption {
 		return title;
 	}
 	
-	public String fetchOptionStatistics() throws IOException {
-		return strategy.getStatistics();
+	public String fetchOptionStatistics() {
+		return strategy.fetchStatistics();
 	}
 	
 	@Override

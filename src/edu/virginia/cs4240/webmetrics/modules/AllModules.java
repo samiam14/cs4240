@@ -12,7 +12,7 @@ public class AllModules extends Module {
 	}
 	
 	@Override
-	public String getStatistics() throws IOException {
+	public String getStatistics() {
 		StringBuilder displayBuilder = new StringBuilder(256);
 		for(DisplayOption d : options) {
 			displayBuilder.append(d.getTitle() + "\n");

@@ -17,6 +17,14 @@ public abstract class Module {
 	public double getScore(){
 		return score;
 	}
+	
+	public String fetchStatistics()
+	{
+		if(Module.request != null) {
+			return getStatistics();
+		}
+		return null;
+	}
 
-	public abstract String getStatistics() throws IOException;
+	public abstract String getStatistics();
 }

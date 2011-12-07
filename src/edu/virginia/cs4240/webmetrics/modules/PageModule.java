@@ -12,16 +12,20 @@ import org.jsoup.nodes.Element;
 public class PageModule extends Module {
 
 	@Override
-	public String getStatistics() throws IOException {
-		StringBuilder stats = new StringBuilder(256);
-		stats.append("The maximum depth of the webpage is: "+(maxTreeDepth(request.getDocument()))+"\n");
-		stats.append(pageSize());
-		stats.append("\nPage Complexity Score: " + getScore());
-		stats.append("\nHeaders sent:\n");
-		stats.append(getRequestHeaders());
-		stats.append("\nHeaders recieved:\n");
-		stats.append(getResponseHeaders());
-		return stats.toString();
+	public String getStatistics() {
+		try {
+			StringBuilder stats = new StringBuilder(256);
+			stats.append("The maximum depth of the webpage is: "+(maxTreeDepth(request.getDocument()))+"\n");
+			stats.append(pageSize());
+			stats.append("\nPage Complexity Score: " + getScore());
+			stats.append("\nHeaders sent:\n");
+			stats.append(getRequestHeaders());
+			stats.append("\nHeaders recieved:\n");
+			stats.append(getResponseHeaders());
+			return stats.toString();
+		} catch(IOException e) {
+			return "Error parsing the document.";
+		}
 	}
 	
 	public int maxTreeDepth(Element root) {
