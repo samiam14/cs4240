@@ -1,7 +1,5 @@
 package edu.virginia.cs4240.webmetrics.modules;
 
-import java.io.IOException;
-
 import edu.virginia.cs4240.webmetrics.WebRequest;
 
 

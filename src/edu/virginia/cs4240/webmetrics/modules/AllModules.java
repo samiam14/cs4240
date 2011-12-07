@@ -1,6 +1,5 @@
 package edu.virginia.cs4240.webmetrics.modules;
 
-import java.io.IOException;
 import java.util.List;
 
 public class AllModules extends Module {

@@ -1,7 +1,5 @@
 package edu.virginia.cs4240.webmetrics.modules;
 
-import java.io.IOException;
-
 public class DisplayOption {
 
 	private Module strategy;

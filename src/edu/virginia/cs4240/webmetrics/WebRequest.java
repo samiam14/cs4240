@@ -1,8 +1,6 @@
 package edu.virginia.cs4240.webmetrics;
 
 import java.io.IOException;
-import java.net.URL;
-
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
